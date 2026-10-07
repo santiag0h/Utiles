@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -8,18 +7,30 @@ import java.util.Scanner;
 
 public class Utiles {
 
-    public static String escanerTexto() {//llamarlo asi String miTexto = Utiles.escanerTexto();lo mismo con la de abajo
+    public static String escanerTexto(boolean ultimo) {//llamarlo asi String miTexto = Utiles.escanerTexto();lo mismo con la de abajo
         Scanner escaner =new Scanner(System.in);
+        System.out.println("Escribe un texto:");
         String texto=escaner.nextLine();
-        escaner.close();
+        if(ultimo==true){
+            escaner.close();
+        }
         return texto;
     }
 
-    public static int escanerNumero() {
+    public static int escanerNumero(boolean ultimo){//si salta error puede ser por que ultimo sea true antes de tiempo
         Scanner escaner = new Scanner(System.in);
-        int numero = Integer.parseInt(escaner.nextLine());
-        escaner.close();
-        return numero; 
+        System.out.println("Escribe un numero:");
+        while(true){//aunque sea raro sirve para que la unica forma de salir sea con un return y asi java no de error
+            try {
+                int numero = Integer.parseInt(escaner.nextLine());
+                if(ultimo==true){
+                    escaner.close();
+                }
+                return numero; 
+            } catch (NumberFormatException e) {
+                System.out.println("Debes de poner un numero.");
+            }
+        }
     }
      public static void LeerArchivo(Path ruta){//posiblemente se deba de cambiar
          try(BufferedReader entrada=Files.newBufferedReader(ruta, StandardCharsets.UTF_8)){
